@@ -1,20 +1,29 @@
-body {
-    background-color: #ffcccc;
-    color: black;
-    font-family: Courier, monospace;
+#app {
+    width: 100%;
+    height: 800px;
+    background-color: aliceblue;
 }
 
-h1 {
-    color: red;
+.container
+{
     text-align: center;
 }
 
-img {
-    text-align: center;
-    height: 150px;
-    width: 150px;
+#myCarousel
+{
+    background-colour: purple;
 }
 
-.image {
-    text-align: center;
+#myCarousel img
+{
+    height:00;
+    margin-top:35px;
+}
+
+.carousel-inner p
+{
+    margin-bottom; px;
+    margin-top: px;
+    colour: white;
+    font-size: 20px;
 }
