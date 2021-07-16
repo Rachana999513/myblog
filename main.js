@@ -1,39 +1,44 @@
-canvas = document.getElementById('myCanvas');
-ctx = canvas.getContext("2d");
 
-nasa_mars_images_array = ["nasa_image_1.jpg","nasa_image_2.jpeg", "nasa_image_3.jpg","nasa_image_4.jpg"];
+var canvas = new fabric.canvas('myCanvas');
 
-random_number = Math.floor(Math.random()* 4); 
-console.log(random_number);
-rover_width = 100;
-rover_height = 90;
+player_x = 10;
+player_y = 10;
 
+block_image_width = 30;
+block_image_height = 30;
 
-background_image =  nasa_mars_images_array[random_number ];
-console.log("background_image = " + background_image);
-rover_image = "rover.png";
+var player_object = "";
+var block_image_object = "";
 
-rover_x = 10;
-rover_y = 10;
+function player_update()
+{
+    fabric.Image.fromURL("player.png", function(Img) {
+        player_object = Img;
 
-function add() {
-    background_imgTag = new Image(); 
-    background_imgTag.onload = uploadBackground; 
-    background_imgTag.src = background_image; 
+        player_object.scaleToWidth(150);
+        player_object.scaleToHeight(140);
+        player_object.set({
+            top:player_y,
+            left:player_x
+        });
+        canvas.add(player_object);
 
-    rover_imgTag = new Image(); 
-    rover_imgTag.onload = uploadrover; 
-    rover_imgTag.src = rover_image; 
+        });
+    }
+    function new_image(get_image)
+     { fabric.Image.fromURL(get_image, function(Img)
+         { block_image_object = Img;
+    block_image_object.scaleToWidth(bolck_image_width);
+    block_image_object.scaleToReight(block_image_height);
+    block_image_object.set({
+        top:player_y,
+        left:player_x
+    });
+    canvas.add(bolck_image_object);
+   
+    });
+
 }
-
-function uploadBackground() {
-    ctx.drawImage (background_imgTag, 0, 0, canvas.width, canvas.height);
-}
-
-function uploadrover() {
-    ctx.drawImage(rover_imgTag, rover_x, rover_y, rover_width, rover_height);
-}
-
 
 window.addEventListener("keydown", my_keydown);
 
@@ -41,72 +46,88 @@ function my_keydown(e)
 {
     keyPressed = e.keyCode;
     console.log(keyPressed);
-    if (keyPressed == '38')
+    if(e.shiftKey == true && keyPresed =='80')
     {
-        up();
-        console.log("up");
+        console.log("p and shift pressed together");
+        block_image_width =  block_image_width + 10;
+        block_image_height = block_image_height + 10;
+        document.getElementById("current_width").innerHTML = block_image_width;
+        document.getElementById("current_height").innerHTML = block_image_height;
     }
+    if(e.shiftkey && keyPressed == '77')
+    {
+        console.log("p and shift pressed together");
+        block_image_width = block_image_width + 10;
+        block_image_width = block_image_height + 10;
+        document.getElementById("current_width").innerHTML = block_image_width;
+        document.getElementById("current_height").innerHTML = block_image_height;
+    }
+    if(keyPressed == '38') 
+    { up(); console.log("up"); } 
+    
     if(keyPressed == '40')
-		{
-			down();
-			console.log("down");
-		}
-		if(keyPressed == '37')
-		{
-			left();
-			console.log("left");
-		}
-		if(keyPressed == '39')
-		{
-			right();
-			console.log("right");
-		}
-}
-function up()
-{
-    if(rover_y >=0)
+     { down(); console.log("down"); } 
+     
+     if(keyPressed == '37') 
+     { left(); console.log("left"); } 
+     
+     if(keyPressed == '39')
+      { right(); console.log("right"); } 
+      
+      if(keyPressed == '87')
+       { new_image('wall.jpg'); console.log("w"); } 
+       
+       if(keyPressed == '71')
+     { new_image('ground.png');
+      console.log("g"); } if(keyPressed == '76') 
+      { new_image('light_green.png'); console.log("l");
+     }
 
-    {
-        rover_y = rover_y - 10;
-        console.log("When up arrow is pressed, x = "+rover_x + " | y = " + rover_y);
-        uploadBackground();
-        uploadrover();
-    }
+     if(keyPressed == '84')
+      { new_image('trunk.jpg'); 
+      console.log("t"); }
+      
+      if(keyPressed == '82') 
+      { new_image('roof.jpg'); 
+      console.log("r"); } 
+      
+      if(keyPressed == '89')
+       { new_image('yellow_wall.png');
+        console.log("y"); } 
+       
+       if(keyPressed == '68')
+        { new_image('dark_green.png'); 
+        console.log("d"); } 
 
-}
+     if(keyPressed == '85') 
+     { new_image('unique.png'); console.log("u"); } 
+     if(keyPressed == '67') { new_image('cloud.jpg'); 
+     console.log("c"); } }
 
-    function down()
-{
-    if(rover_y <=500)
+     function up()
 
-    {
-        rover_y = rover_y + 10;
-        console.log("When down arrow is pressed, x = "+rover_x + " | y = " + rover_y);
-        uploadBackground();
-        uploadrover();
-    }
+      { if(player_y >=0) 
+        { player_y = player_y - block_image_height; console.log("block image height = " + block_image_height);
+        console.log("When Up arrow key is pressed, X = " + player_x + " , Y = "+player_y);
+         canvas.remove(player_object); player_update(); } }
+         
+         
+         function down() { if(player_y <=500) 
+            { player_y = player_y + block_image_height;
+                 console.log("block image height = " + block_image_height); 
+      
+                 console.log("When Down arrow key is pressed, X = " + player_x + " , Y = "+player_y);
+                  canvas.remove(player_object); player_update(); } }
 
-}
-function left()
-{
-    if(rover_x >=0)
-
-    {
-        rover_x = rover_x - 10;
-        console.log("When left arrow is pressed, x = "+rover_x + " | y = " + rover_y);
-        uploadBackground();
-        uploadrover();
-    }
-
-}function right()
-{
-    if(rover_x <=700)
-
-    {
-        rover_x = rover_x + 10;
-        console.log("When right arrow is pressed, x = "+rover_x + " | y = " + rover_y);
-        uploadBackground();
-        uploadrover();
-    }
-
-}
+function left() { if(player_x >0) 
+    { player_x = player_x - block_image_width;
+         console.log("block image width = " + block_image_width); 
+         console.log("When Left arrow key is pressed, X = " + player_x + " , Y = "+player_y);
+          canvas.remove(player_object); player_update(); } } 
+          
+          function right() { if(player_x <=850)
+             { player_x = player_x + block_image_width;
+                 console.log("block image width = " + block_image_width); 
+                 console.log("When Right arrow key is pressed, X = " + player_x + " , Y = "+player_y); 
+                 canvas.remove(player_object); 
+                 player_update(); } }
