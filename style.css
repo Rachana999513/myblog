@@ -1,20 +1,33 @@
-.body_backgorund 
+#start-btn
 {
-    background-image:url(backg.jpg);
-    background-position:center;
-    background-size:cover;
+    width: 40%;
+} 
+#camera
+{
+    width:360px;
+    height: 250px;
+    border:1px solid grey;
 }
-#myCanvas
+#logo_img
 {
-    border-width:10px;
-    background-color: white; 
-    border-style:ridge;
+    width: 150px;
+    border-radius: 100px;
+}
+#textbox
+{
+    width: 300px;
+}
+body
+{
+    background-image:url('https://png.pngtree.com/png-clipart/20190517/original/pngtree-abstract-colorful-light-background-png-image_3637854.jpg') ;
+    color: white;
 }
 
-h3
-{
-	width: 1000px;
-	background-color: white;
-	display: inline-block;
+
+h3{
+    color:white;
 }
 
+h1{
+    color: white;
+}

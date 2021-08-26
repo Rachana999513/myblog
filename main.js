@@ -1,66 +1,57 @@
+var SpeechRecognition = window.webkitSpeechRecognition;
 
-var canvas = new fabric.canvas("myCanvas");
+var recognition = new SpeechRecognition();
 
- block_y=1;
- block_x=1;
+function start()
+ { document.getElementById("textbox").innerHTML = ""; 
+ recognition.start(); } 
+ recognition.onresult = function(event)
+  {
+       console.log(event); 
+    var Content = event.results[0][0].transcript; 
+    document.getElementById("textbox").innerHTML = Content;
+     console.log(Content); if(Content =="take my selfie") { console.log("taking selfie --- "); 
+     speak(); }
+    
+    }
 
-block_image_width = 350;
-block_image_height = 430;
+function speak(){
+    var synth = window.speechSynthesis;
 
-var block_image_object= "";
+    speak_data = "Taking you Selfie in 5 seconds";
 
-function new_image(get_image)
-{
-	fabric.get_image.fromURL(get_image, function(Img) {
-		block_image_object = Img;
+    var utterThis = new SpeechSynthesisUtterance(speak_data);
 
-		block_image_object.scaleToWidth(block_image_width);
-		block_image_object.scaleToHeight(block_image_height);
-		block_image_object.scaleToHeight({
-		top:block_y,
-		left:block_x
-		});
-		canvas.add(block_image_object);
-	});
-}
+    synth.speak(utterThis);
+    Webcam.attach(camera);
 
-window.addEventListener("keydown", my_keydown);
-
-function my_keydown(e)
-{
-keyPressed = e.keyCode;
-console.log(keyPressed);
-
-	if(keyPressed == '82') 
+    setTimeout(function()
     {
-		new_image('rr1.png');
-		console.log("r");
-	}
-	if(keyPressed == '71')
-	{
-		block_x = 200;
-		new_image('gr.png');
-		console.log("g");
-	}
-	
-	if(keyPressed == '89')
-	{
-		block_x =350;
-		new_image('yr.png');
-		console.log("y");
-	}
-	if(keyPressed == '80')
-	{
-		block_x = 600;
-		new_image('pr.png');
-		console.log("p");
-	}
-	if(keyPressed == '66')
-	{
-		block_x = 700;
-		new_image('br.png');
-		console.log("b");
-	}
-	
+        take_snapshot();
+        save();
+    }, 5000);
+}
+camera = document.getElementById("camera");
+Webcam.set({
+    width:360,
+    height:250,
+    image_format : 'jpeg',
+    png_quality:90
+});
+
+
+function take_snapshot()
+{
+    Webcam.snap(function(data_url) {
+        document.getElementById("result").innerHTML = '<img id="selfie_image" src="'+data_url+'"/>';
+
+    });
 }
 
+function save()
+{
+    link = document.getElementById("link");
+    image = document.getElementById("selfie_image").src ;
+    link.href = image;
+    link.click();
+}
