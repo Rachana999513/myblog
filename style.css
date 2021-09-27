@@ -1,33 +1,38 @@
-#start-btn
-{
-    width: 40%;
-} 
-#camera
-{
-    width:360px;
-    height: 250px;
-    border:1px solid grey;
-}
-#logo_img
-{
-    width: 150px;
-    border-radius: 100px;
-}
-#textbox
-{
-    width: 300px;
-}
 body
 {
-    background-image:url('https://png.pngtree.com/png-clipart/20190517/original/pngtree-abstract-colorful-light-background-png-image_3637854.jpg') ;
+    font-family: 'Akaya Telivigala', cursive;
+    background: white;
+}
+
+.header_div
+{
+    background: whitesmoke;
     color: white;
 }
 
-
-h3{
-    color:white;
+.header_div p{
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 2px;
+    font-size: 12px;
+    font-weight: bold;
 }
 
-h1{
+.main_div button{
+    font-family: 'Roboto', sans-serif;
+    margin-top: 30px;
+    width: 130px;
+    font-weight: bolder;
+    letter-spacing: 3px;
+}
+
+.copy_right_footer {
+    position: fixed;
     color: white;
+    bottom: 0;
+    width: 100%;
+    font-size: 18px;
+    background-color: yellow;
+    line-height: 3;
+    text-align: center;
+    text-shadow: 5px 5px 5px rgb(151, 149, 149);
 }
