@@ -1,41 +1,54 @@
-function startClassification()
-    {
-        navigator.mediaDevices.getUserMedia ({ audio: true, video:false}); 
-        classifier = ml5.soundClassifier('https://teachablemachine.withgoogle.com/models/u02fOYRBx/model.json', { probabilityThreshold: 0.7 } ,modelReady); 
-    }
+img = "";
+objects = [];
+status = "";
 
-    function modelReady(){
-        classifier.classify(gotResults);
-    }
-
-    var dog = 0;
-    var cat = 0;
-
-    function gotResults(error, results) {
-        if (error) {
-            console.error(error);
-        } else {
-            console.log(resluts);
-            random_number_r = Math.floor(Math.random() = 255) + 1;
-            random_number_g = Math.floor(Math.random() = 255) + 1;
-            random_number_b = Math.floor(Math.random() = 255) + 1;
-
-            document.getElementById("result_label").innerHTML = 'Detected voice is of - '+ results[0].label;
-            document.getElementById("reslut_count").innerHTML = 'Detected Dog - '+dog+ 'Detected Cat - '+cat;
-            document.getElementById("result_label").style.color = "rgb("+random_number_r+","+random_number_g+","+random_number_r+")";
-            document.getElementById("result_count").style.color = "rgb("+random_number_r+","+random_number_r+","+random_nuber_r+")";
-        
-        img = document.getElementById('animal_image');
-    
-    if (results[0].label == "Barking") {
-img.src = "bark.gif";
-dog = dog+1;
-} else if (results[0].label == "Meowing") {
-    img.src = 'meow.gif';
-    cat = cat + 1;
-} else{
-    img.src = 'listen.gif';
+function preload(){
+  img = loadImage('dog_cat.jpg');
 }
 
-    }
+
+function setup() {
+  canvas = createCanvas(380, 380);
+  canvas.center();
+  video = createCapture(VIDEO);
+  video.size(380,380);
+  video.hide();
+  objectDetector = ml5.objectDetector('cocossd', modelLoaded);
+  document.getElementById("status").innerHTML = "Status : Detecting Objects";
+}
+
+function modelLoaded() {
+  console.log("Model Loaded!")
+  status = true;
+}
+
+function gotResult(error, results) {
+  if (error) {
+    console.log(error);
+  }
+  console.log(results);
+  objects = results;
+}
+
+
+function draw() {
+  image(video, 0, 0, 380, 380);
+      if(status != "")
+      {
+        r =  random(255);
+        g =  random(255);
+        b =  random(255);      
+        objectDetector.detect(video, gotResult);
+        for (i = 0; i < objects.length; i++) {
+          document.getElementById("status").innerHTML = "Status : Object Detected";
+          document.getElementById("number_of_objects").innerHTML = "Number of objects detected are : "+ objects.length;
+ 
+          fill(r,g,b);
+          percent = floor(objects[i].confidence * 100);
+          text(objects[i].label + " " + percent + "%", objects[i].x + 15, objects[i].y + 15);
+          noFill();
+          stroke(r,g,b);
+          rect(objects[i].x, objects[i].y, objects[i].width, objects[i].height);
+        }
+      }
 }
